@@ -58,6 +58,16 @@ public class Easing : MonoBehaviour
         return 1-0f-inverseT*inverseT*inverseT*inverseT*inverseT;
     }
 
+    public static float SmoothStep(float t)
+    {
+        return t * t * (3.0f - 2.0f * t);
+    }
+
+    public static float SmootherStep(float t)
+    {
+        return t * t * t * (6.0f * t * t - 15.0f * t + 10.0f);
+    }
+
     public static float Mix(float a, float b, float blend)
     {
         return (a + blend * (b - a));
