@@ -29,7 +29,7 @@ public class Easing : MonoBehaviour
         return t * t * t * t * t;
     }
 
-    public static float Flip(float t)
+    public static float FlipY(float t)
     {
         return 1.0f - t;
     }
@@ -37,25 +37,25 @@ public class Easing : MonoBehaviour
     public static float SmoothStop2(float t)
     {
         float inverseT = 1.0f - t;
-        return 1-0f-inverseT*inverseT;
+        return 1.0f - inverseT * inverseT;
     }
     
     public static float SmoothStop3(float t)
     {
         float inverseT = 1.0f - t;
-        return 1-0f-inverseT*inverseT*inverseT;
+        return 1.0f - inverseT * inverseT * inverseT;
     }
     
     public static float SmoothStop4(float t)
     {
         float inverseT = 1.0f - t;
-        return 1-0f-inverseT*inverseT*inverseT*inverseT;
+        return 1.0f - inverseT * inverseT * inverseT * inverseT;
     }
     
     public static float SmoothStop5(float t)
     {
         float inverseT = 1.0f - t;
-        return 1-0f-inverseT*inverseT*inverseT*inverseT*inverseT;
+        return 1.0f - inverseT * inverseT * inverseT * inverseT * inverseT;
     }
 
     public static float SmoothStep(float t)
@@ -72,4 +72,49 @@ public class Easing : MonoBehaviour
     {
         return (a + blend * (b - a));
     }
+
+    public static float Scale(float a, float t)
+    {
+        return  a * t;
+    }
+
+    public static float ReverseScale(float a, float t)
+    {
+        return (1.0f - t) * a;
+    }
+
+    public static float Arch2(float t)
+    {
+        return Scale(FlipY(t), t);
+    }
+
+    public static float SmoothStartArch3(float t)
+    {
+        return 20.0f/3.0f*Scale(Arch2(t), t);
+    }
+
+    public static float SmoothStopArch3(float t)
+    {
+        return 20.0f/3.0f*ReverseScale(Arch2(t), t);
+    }
+    
+    public static float SmoothStepArch4(float t)
+    {
+        return 12.0f/5.0f*ReverseScale(SmoothStartArch3(t), t);
+    }
+
+    public static float BellCurve6(float t)
+    {
+        return 36.0f/25.0f*SmoothStopArch3(t) * SmoothStartArch3(t);
+    }
+
+    public static float NormalizedBezier3(float b, float c, float t)
+    {
+        float s = 1.0f - t;
+        float t2 = t * t;
+        float s2 = s * s;
+        float t3 = t2 * t;
+        return (3.0f * b * s2 * t) + (3.0f * c * s * t2) + t3;
+    }
+    
 }
